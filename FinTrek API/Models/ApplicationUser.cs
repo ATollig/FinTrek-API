@@ -8,5 +8,8 @@ namespace FinTrek_API.Models
         public string Surname { get; set; } = string.Empty;
         public int? SubscriptionId { get; set; }
         public Subscription? Subscription { get; set; }
+        public int? CurrencyCodeId { get; set; }
+        public CurrencyCode CurrencyCode { get; set; }
+
     }
 }

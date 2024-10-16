@@ -4,6 +4,7 @@ using FinTrek_API.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FinTrek_API.Migrations
 {
     [DbContext(typeof(FinTrekDBContext))]
-    partial class FinTrekDBContextModelSnapshot : ModelSnapshot
+    [Migration("20241016142407_new")]
+    partial class @new
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -61,24 +64,6 @@ namespace FinTrek_API.Migrations
                     b.ToTable("Accounts");
                 });
 
-            modelBuilder.Entity("FinTrek_API.Models.AccountRecord", b =>
-                {
-                    b.Property<int>("AccountId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("RecordId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("IsTransfer")
-                        .HasColumnType("bit");
-
-                    b.HasKey("AccountId", "RecordId");
-
-                    b.HasIndex("RecordId");
-
-                    b.ToTable("AccountRecords");
-                });
-
             modelBuilder.Entity("FinTrek_API.Models.AccountType", b =>
                 {
                     b.Property<int>("Id")
@@ -107,9 +92,6 @@ namespace FinTrek_API.Migrations
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("CurrencyCodeId")
-                        .HasColumnType("int");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
@@ -164,8 +146,6 @@ namespace FinTrek_API.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CurrencyCodeId");
-
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
 
@@ -181,36 +161,36 @@ namespace FinTrek_API.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "530c7c1a-8287-43a4-940f-d3e23564a58c",
+                            Id = "2627edc4-5c6f-4b77-b808-894344c960e4",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "cb473693-804c-4ad1-8a1f-ae8b6db4b6bf",
+                            ConcurrencyStamp = "b3641cfd-b43e-4746-a43d-c657c06f7b6a",
                             Email = "admin@example.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             Name = "Admin",
                             NormalizedEmail = "ADMIN@EXAMPLE.COM",
                             NormalizedUserName = "ADMIN@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAECB8skfGnkAOIJMqxXr6efIJNeVL9jsrATtj+fEz51s9AJCRFQPQfSBTAiNXkv8oYA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEOCLO3rri0nBCFXKmxOwF6/SCbgYrn4nSw0F1R/JydfUEw6lZvvgaWOdCH0dgnh7NQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "1a078eb4-d20e-4f61-8a78-7a343699a68c",
+                            SecurityStamp = "89f0237c-8657-4de8-bf03-e3474bc675e4",
                             Surname = "User",
                             TwoFactorEnabled = false,
                             UserName = "admin@example.com"
                         },
                         new
                         {
-                            Id = "7e058b85-043e-40ad-a850-867edea5c0e5",
+                            Id = "97339b14-11fc-428f-ace6-0c414a220e68",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "958e3ec1-8e43-4178-a119-2b1076fc8cc7",
+                            ConcurrencyStamp = "89c57658-108c-4a0d-babb-cf8aed03b96f",
                             Email = "dev@example.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             Name = "Dev",
                             NormalizedEmail = "DEV@EXAMPLE.COM",
                             NormalizedUserName = "DEV@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEEpRey8moJaYVq1SpzxnvXUxcU5Yuhu6FAYJ2dOB930k+Pi9u6k+78FjsuTJxdXnkA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEIbNFp/GxrUPjLTT+or98an02cRdxfJ9ZlEb4OThwLXvGrpKy46xVAAPKY+7h9CnRg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "28c0d7fc-1d86-4256-8e5d-2d975dd58051",
+                            SecurityStamp = "5e6df8d6-a063-4722-8a00-d268f7a34f8a",
                             Surname = "User",
                             TwoFactorEnabled = false,
                             UserName = "dev@example.com"
@@ -270,7 +250,7 @@ namespace FinTrek_API.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Budgets");
+                    b.ToTable("Budget");
                 });
 
             modelBuilder.Entity("FinTrek_API.Models.Category", b =>
@@ -307,32 +287,7 @@ namespace FinTrek_API.Migrations
 
                     b.HasIndex("RecordTypeId");
 
-                    b.ToTable("Categorys");
-                });
-
-            modelBuilder.Entity("FinTrek_API.Models.CurrencyCode", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Code")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CountryName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Currency")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("CurrencyCodes");
+                    b.ToTable("Category");
                 });
 
             modelBuilder.Entity("FinTrek_API.Models.Payee", b =>
@@ -386,64 +341,6 @@ namespace FinTrek_API.Migrations
                     b.ToTable("PaymentTypes");
                 });
 
-            modelBuilder.Entity("FinTrek_API.Models.Record", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<double>("Amount")
-                        .HasColumnType("float");
-
-                    b.Property<string>("ApplicationUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CurrencyCodeId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Note")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("PayeeId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PayerId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PaymentTypeId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("RecordDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("RecordTypeId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ApplicationUserId");
-
-                    b.HasIndex("CategoryId");
-
-                    b.HasIndex("CurrencyCodeId");
-
-                    b.HasIndex("PayeeId");
-
-                    b.HasIndex("PayerId");
-
-                    b.HasIndex("PaymentTypeId");
-
-                    b.HasIndex("RecordTypeId");
-
-                    b.ToTable("Record");
-                });
-
             modelBuilder.Entity("FinTrek_API.Models.RecordType", b =>
                 {
                     b.Property<int>("Id")
@@ -459,72 +356,6 @@ namespace FinTrek_API.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("RecordTypes");
-                });
-
-            modelBuilder.Entity("FinTrek_API.Models.Saving", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<bool>("Active")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("ExpectedEndDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("GoalReached")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("TotalAmount")
-                        .HasColumnType("float");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CategoryId");
-
-                    b.ToTable("Savings");
-                });
-
-            modelBuilder.Entity("FinTrek_API.Models.SavingRecord", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<double>("Amount")
-                        .HasColumnType("float");
-
-                    b.Property<bool>("Claim")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("RecordId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SavingId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RecordId");
-
-                    b.HasIndex("SavingId");
-
-                    b.ToTable("SavingRecord");
                 });
 
             modelBuilder.Entity("FinTrek_API.Models.Subscription", b =>
@@ -775,12 +606,12 @@ namespace FinTrek_API.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "530c7c1a-8287-43a4-940f-d3e23564a58c",
+                            UserId = "2627edc4-5c6f-4b77-b808-894344c960e4",
                             RoleId = "1"
                         },
                         new
                         {
-                            UserId = "7e058b85-043e-40ad-a850-867edea5c0e5",
+                            UserId = "97339b14-11fc-428f-ace6-0c414a220e68",
                             RoleId = "2"
                         });
                 });
@@ -831,36 +662,11 @@ namespace FinTrek_API.Migrations
                     b.Navigation("Bank");
                 });
 
-            modelBuilder.Entity("FinTrek_API.Models.AccountRecord", b =>
-                {
-                    b.HasOne("FinTrek_API.Models.Account", "Account")
-                        .WithMany("AccountRecords")
-                        .HasForeignKey("AccountId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("FinTrek_API.Models.Record", "Record")
-                        .WithMany("AccountRecords")
-                        .HasForeignKey("RecordId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Account");
-
-                    b.Navigation("Record");
-                });
-
             modelBuilder.Entity("FinTrek_API.Models.ApplicationUser", b =>
                 {
-                    b.HasOne("FinTrek_API.Models.CurrencyCode", "CurrencyCode")
-                        .WithMany()
-                        .HasForeignKey("CurrencyCodeId");
-
                     b.HasOne("FinTrek_API.Models.Subscription", "Subscription")
                         .WithMany()
                         .HasForeignKey("SubscriptionId");
-
-                    b.Navigation("CurrencyCode");
 
                     b.Navigation("Subscription");
                 });
@@ -909,95 +715,6 @@ namespace FinTrek_API.Migrations
                     b.Navigation("Parent");
 
                     b.Navigation("RecordType");
-                });
-
-            modelBuilder.Entity("FinTrek_API.Models.Record", b =>
-                {
-                    b.HasOne("FinTrek_API.Models.ApplicationUser", "ApplicationUser")
-                        .WithMany()
-                        .HasForeignKey("ApplicationUserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("FinTrek_API.Models.Category", "Category")
-                        .WithMany()
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("FinTrek_API.Models.CurrencyCode", "CurrencyCode")
-                        .WithMany()
-                        .HasForeignKey("CurrencyCodeId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("FinTrek_API.Models.Payee", "Payee")
-                        .WithMany()
-                        .HasForeignKey("PayeeId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("FinTrek_API.Models.Payer", "Payer")
-                        .WithMany()
-                        .HasForeignKey("PayerId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("FinTrek_API.Models.PaymentType", "PaymentType")
-                        .WithMany()
-                        .HasForeignKey("PaymentTypeId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("FinTrek_API.Models.RecordType", "RecordType")
-                        .WithMany()
-                        .HasForeignKey("RecordTypeId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("ApplicationUser");
-
-                    b.Navigation("Category");
-
-                    b.Navigation("CurrencyCode");
-
-                    b.Navigation("Payee");
-
-                    b.Navigation("Payer");
-
-                    b.Navigation("PaymentType");
-
-                    b.Navigation("RecordType");
-                });
-
-            modelBuilder.Entity("FinTrek_API.Models.Saving", b =>
-                {
-                    b.HasOne("FinTrek_API.Models.Category", "Category")
-                        .WithMany()
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Category");
-                });
-
-            modelBuilder.Entity("FinTrek_API.Models.SavingRecord", b =>
-                {
-                    b.HasOne("FinTrek_API.Models.Record", "Record")
-                        .WithMany()
-                        .HasForeignKey("RecordId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("FinTrek_API.Models.Saving", "Saving")
-                        .WithMany()
-                        .HasForeignKey("SavingId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Record");
-
-                    b.Navigation("Saving");
                 });
 
             modelBuilder.Entity("FinTrek_API.Models.SubscriptionPayment", b =>
@@ -1068,16 +785,6 @@ namespace FinTrek_API.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("FinTrek_API.Models.Account", b =>
-                {
-                    b.Navigation("AccountRecords");
-                });
-
-            modelBuilder.Entity("FinTrek_API.Models.Record", b =>
-                {
-                    b.Navigation("AccountRecords");
                 });
 #pragma warning restore 612, 618
         }
