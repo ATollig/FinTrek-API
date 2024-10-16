@@ -15,5 +15,7 @@
 
         public int AccountTypeId { get; set; }
         public AccountType AccountType { get; set; }
+
+        public ICollection<AccountRecord> AccountRecords { get; set; }
     }
 }

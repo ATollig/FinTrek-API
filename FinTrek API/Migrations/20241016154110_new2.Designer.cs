@@ -4,6 +4,7 @@ using FinTrek_API.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FinTrek_API.Migrations
 {
     [DbContext(typeof(FinTrekDBContext))]
-    partial class FinTrekDBContextModelSnapshot : ModelSnapshot
+    [Migration("20241016154110_new2")]
+    partial class new2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -59,24 +62,6 @@ namespace FinTrek_API.Migrations
                     b.HasIndex("BankId");
 
                     b.ToTable("Accounts");
-                });
-
-            modelBuilder.Entity("FinTrek_API.Models.AccountRecord", b =>
-                {
-                    b.Property<int>("AccountId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("RecordId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("IsTransfer")
-                        .HasColumnType("bit");
-
-                    b.HasKey("AccountId", "RecordId");
-
-                    b.HasIndex("RecordId");
-
-                    b.ToTable("AccountRecords");
                 });
 
             modelBuilder.Entity("FinTrek_API.Models.AccountType", b =>
@@ -181,36 +166,36 @@ namespace FinTrek_API.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "530c7c1a-8287-43a4-940f-d3e23564a58c",
+                            Id = "174bdcf5-3c39-4cd9-8e52-48c68765ae71",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "cb473693-804c-4ad1-8a1f-ae8b6db4b6bf",
+                            ConcurrencyStamp = "01cad31a-c668-4dac-bf5d-50d2fd95a27f",
                             Email = "admin@example.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             Name = "Admin",
                             NormalizedEmail = "ADMIN@EXAMPLE.COM",
                             NormalizedUserName = "ADMIN@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAECB8skfGnkAOIJMqxXr6efIJNeVL9jsrATtj+fEz51s9AJCRFQPQfSBTAiNXkv8oYA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAENDrH99vAg6RoNht8eC0uy4pZ9qbS0oPHkfH/U37b7C/7Ii5Ds9u5FH+hk1EHWw/MA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "1a078eb4-d20e-4f61-8a78-7a343699a68c",
+                            SecurityStamp = "7aa142e0-bce9-44da-a9a9-eccd80c70570",
                             Surname = "User",
                             TwoFactorEnabled = false,
                             UserName = "admin@example.com"
                         },
                         new
                         {
-                            Id = "7e058b85-043e-40ad-a850-867edea5c0e5",
+                            Id = "1e3fb57c-b184-4362-8ede-2ae912c8ef05",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "958e3ec1-8e43-4178-a119-2b1076fc8cc7",
+                            ConcurrencyStamp = "2066f279-4136-4541-a1e1-c871e704020f",
                             Email = "dev@example.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             Name = "Dev",
                             NormalizedEmail = "DEV@EXAMPLE.COM",
                             NormalizedUserName = "DEV@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEEpRey8moJaYVq1SpzxnvXUxcU5Yuhu6FAYJ2dOB930k+Pi9u6k+78FjsuTJxdXnkA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEPuxvVA7WW1bx0qsnGumudd9Qa1Jey+jMI9AwV0tlhBRBf9n/lAusuln+dHBBhOlzg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "28c0d7fc-1d86-4256-8e5d-2d975dd58051",
+                            SecurityStamp = "8bc6a792-2203-4280-bbfa-dccbf47dd12b",
                             Surname = "User",
                             TwoFactorEnabled = false,
                             UserName = "dev@example.com"
@@ -775,12 +760,12 @@ namespace FinTrek_API.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "530c7c1a-8287-43a4-940f-d3e23564a58c",
+                            UserId = "174bdcf5-3c39-4cd9-8e52-48c68765ae71",
                             RoleId = "1"
                         },
                         new
                         {
-                            UserId = "7e058b85-043e-40ad-a850-867edea5c0e5",
+                            UserId = "1e3fb57c-b184-4362-8ede-2ae912c8ef05",
                             RoleId = "2"
                         });
                 });
@@ -829,25 +814,6 @@ namespace FinTrek_API.Migrations
                     b.Navigation("ApplicationUser");
 
                     b.Navigation("Bank");
-                });
-
-            modelBuilder.Entity("FinTrek_API.Models.AccountRecord", b =>
-                {
-                    b.HasOne("FinTrek_API.Models.Account", "Account")
-                        .WithMany("AccountRecords")
-                        .HasForeignKey("AccountId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("FinTrek_API.Models.Record", "Record")
-                        .WithMany("AccountRecords")
-                        .HasForeignKey("RecordId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Account");
-
-                    b.Navigation("Record");
                 });
 
             modelBuilder.Entity("FinTrek_API.Models.ApplicationUser", b =>
@@ -1068,16 +1034,6 @@ namespace FinTrek_API.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("FinTrek_API.Models.Account", b =>
-                {
-                    b.Navigation("AccountRecords");
-                });
-
-            modelBuilder.Entity("FinTrek_API.Models.Record", b =>
-                {
-                    b.Navigation("AccountRecords");
                 });
 #pragma warning restore 612, 618
         }

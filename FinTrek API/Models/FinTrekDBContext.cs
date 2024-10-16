@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 
 namespace FinTrek_API.Models
 {
@@ -8,14 +9,20 @@ namespace FinTrek_API.Models
     {
         public FinTrekDBContext(DbContextOptions<FinTrekDBContext> options) : base(options) { }
 
-        public DbSet<Subscription> Subscriptions { get; set; }
-        public DbSet<SubscriptionPayment> SubscriptionPayments { get; set; }
         public DbSet<Account> Accounts { get; set; }
         public DbSet<AccountType> AccountTypes { get; set; }
         public DbSet<Bank> Banks { get; set; }
+        public DbSet<Budget> Budgets { get; set; }
+        public DbSet<Category> Categorys { get; set; }
+        public DbSet<CurrencyCode> CurrencyCodes { get; set; }
         public DbSet<Payee> Payees { get; set; }
         public DbSet<Payer> Payers { get; set; }
-
+        public DbSet<PaymentType> PaymentTypes { get; set; }
+        public DbSet<RecordType> RecordTypes { get; set; }
+        public DbSet<Saving> Savings { get; set; }
+        public DbSet<Subscription> Subscriptions { get; set; }
+        public DbSet<SubscriptionPayment> SubscriptionPayments { get; set; }
+        public DbSet<AccountRecord> AccountRecords { get; set; }             
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder); // Call the base method
@@ -49,6 +56,110 @@ namespace FinTrek_API.Models
                 .WithMany()
                 .HasForeignKey(sp => sp.ApplicationUserId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Category>()
+                .HasOne(sp => sp.RecordType)
+                .WithMany()
+                .HasForeignKey(sp => sp.RecordTypeId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Category>()
+                .HasOne(sp => sp.ApplicationUser)
+                .WithMany()
+                .HasForeignKey(sp => sp.ApplicationUserId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Category>()
+                .HasOne(sp => sp.Parent)
+                .WithMany()
+                .HasForeignKey(sp => sp.ParentId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Budget>()
+                .HasOne(sp => sp.Category)
+                .WithMany()
+                .HasForeignKey(sp => sp.CategoryId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Budget>()
+                .HasOne(sp => sp.ApplicationUser)
+                .WithMany()
+                .HasForeignKey(sp => sp.ApplicationUserId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Saving>()
+                .HasOne(sp => sp.Category)
+                .WithMany()
+                .HasForeignKey(sp => sp.CategoryId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Record>()
+                .HasOne(sp => sp.PaymentType)
+                .WithMany()
+                .HasForeignKey(sp => sp.PaymentTypeId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Record>()
+                .HasOne(sp => sp.RecordType)
+                .WithMany()
+                .HasForeignKey(sp => sp.RecordTypeId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Record>()
+                .HasOne(sp => sp.Category)
+                .WithMany()
+                .HasForeignKey(sp => sp.CategoryId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Record>()
+                .HasOne(sp => sp.Payer)
+                .WithMany()
+                .HasForeignKey(sp => sp.PayerId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Record>()
+                .HasOne(sp => sp.Payee)
+                .WithMany()
+                .HasForeignKey(sp => sp.PayeeId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Record>()
+                .HasOne(sp => sp.ApplicationUser)
+                .WithMany()
+                .HasForeignKey(sp => sp.ApplicationUserId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Record>()
+                .HasOne(sp => sp.CurrencyCode)
+                .WithMany()
+                .HasForeignKey(sp => sp.CurrencyCodeId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<SavingRecord>()
+                .HasOne(sp => sp.Record)
+                .WithMany()
+                .HasForeignKey(sp => sp.RecordId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<SavingRecord>()
+                .HasOne(sp => sp.Saving)
+                .WithMany()
+                .HasForeignKey(sp => sp.SavingId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<AccountRecord>()
+                .HasKey(ar => new { ar.AccountId, ar.RecordId });
+
+            modelBuilder.Entity<AccountRecord>()
+                .HasOne(ar => ar.Account)
+                .WithMany(a => a.AccountRecords)
+                .HasForeignKey(ar => ar.AccountId);
+
+            modelBuilder.Entity<AccountRecord>()
+                .HasOne(ar => ar.Record)
+                .WithMany(r => r.AccountRecords)
+                .HasForeignKey(ar => ar.RecordId);
+
 
             // Seed roles
             SeedRoles(modelBuilder);
