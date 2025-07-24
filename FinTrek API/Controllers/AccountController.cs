@@ -96,6 +96,7 @@ namespace FinTrek_API.Controllers
                 }
             }
 
+
             return Ok();
         }
 
